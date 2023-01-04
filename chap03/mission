@@ -1,0 +1,7 @@
+1. client가 server에게 연결 요청
+2. client는 server의 연결 수락 후 'print'명령을 보냄
+3. server는 client로 부터 'print' 명령을 받으면, 'hello, world'를 보냄
+4. client는 server로 부터 받은 'hello, world'를 화면에 출력
+
+방법1] client에서 telnet ip주소 9000번으로 서버에 연결 후, print\r\n을 보냄
+방법2] client의 고유 프로그램을 실행시키고, 사용자로부터 명령(print)을 받아 서버로 보냄
