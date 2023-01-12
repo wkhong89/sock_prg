@@ -8,6 +8,8 @@
 #define PORT 9000
 
 char buffer[BUFSIZ] = "hello, world\n";
+char in_buffer[BUFSIZ];
+
 
 int main(void) 
 {
@@ -43,9 +45,18 @@ int main(void)
             exit(0);
         }
 
-        n = strlen(buffer);
-        printf("[%d] %s\n", n, buffer);
-        write(c_socket, buffer, n);
+        while (1) {
+            if ((n = read(c_socket, in_buffer, sizeof(in_buffer))) < 0) {
+                perror("read error: ");
+                exit(0);
+            }
+
+            printf("[%d] %s\n", n, in_buffer);
+            if (strncmp(in_buffer, "print", strlen("print")) == 0) {
+                write(c_socket, buffer, strlen(buffer));
+                break;
+            } 
+        }
 
         close(c_socket);
     }

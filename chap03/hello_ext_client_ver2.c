@@ -31,6 +31,8 @@ int main(void)
         exit(0);
     }
 
+    write(c_socket, "print", sizeof("print"));
+
     if ((n = read(c_socket, rcvBuffer, sizeof(rcvBuffer))) < 0) {
         perror("Read error: ");
         exit(0);

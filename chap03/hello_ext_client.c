@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -16,22 +17,28 @@ int main(void)
     int n;
 
     char rcvBuffer[BUFSIZ];
+    char buffer[BUFSIZ];
 
-    c_socket=socket(PF_INET, SOCK_STREAM, 0);
+    c_socket=socket(AF_INET, SOCK_STREAM, 0);
 
     memset(&c_addr, 0, sizeof(c_addr));
-    c_addr.sin_addr.s_addr = inet_addr(IPADDR);
     c_addr.sin_family = AF_INET;
+    c_addr.sin_addr.s_addr = inet_addr(IPADDR);
     c_addr.sin_port = htons(PORT);
 
-    if (connect(c_socket, (struct sockaddr *)&c_addr, sizeof(c_addr))==-1) {
-        printf("Cannot connect\n");
+    if (connect(c_socket, (struct sockaddr *)&c_addr, sizeof(c_addr)) < 0) {
+        perror("Connect error: ");
         close(c_socket);
-        return -1;
+        exit(0);
     }
 
-    if (n = read(c_socket, rcvBuffer, sizeof(rcvBuffer)) < 0) {
-        return -1;
+    scanf("%s", buffer);
+    buffer[strlen(buffer)] = '\0';
+    write(c_socket, buffer, strlen(buffer) + 1);
+
+    if ((n = read(c_socket, rcvBuffer, sizeof(rcvBuffer))) < 0) {
+        perror("Read error: ");
+        exit(0);
     }
 
     rcvBuffer[n] = '\0';
@@ -39,8 +46,5 @@ int main(void)
     printf("received Data: %s\n", rcvBuffer);
 
     close(c_socket);
-
-
-
 
 }
