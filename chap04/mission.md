@@ -37,11 +37,11 @@ struct servent {
 ## 주소의 구성
 * 접속점 주소 = IP 주소 (이진값/big-endian) + 포트 번호 (2바이트 이진값/big-endian)
 1. IP 주소 표현 방식
-> a) 도메인 이름 문자열: 예) "www.naver.com"
-> b) 점수 10진수 문자열: "202.131.30.81"
-> c) 이진값(big-endian): 0xCBF92703
+> a) 도메인 이름 문자열: 예) "www.naver.com"   
+> b) 점수 10진수 문자열: "202.131.30.81"   
+> c) 이진값(big-endian): 0xCBF92703    
 2. 포트 번호
-  1) 2바이트 이진 값(big-endian): 0x1234
+> a) 2바이트 이진 값(big-endian): 0x1234
 
 ## 네트워크/호스트 바이트 순서 간 자료 변환 (ordering.c, ntoh_hton.c)
 * 호스트는 바이트 순서가 big혹은 little endian일 수 있으며, 네트워크로 전송하기 위해서는 반드시 big-endian으로 바꿔줘야 함
